@@ -1,0 +1,17 @@
+# Node / React
+node_modules/
+dist/
+build/
+.next/
+coverage/
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Env / OS
+.env
+.DS_Store
+*.log
