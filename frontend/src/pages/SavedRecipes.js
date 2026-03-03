@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getSavedRecipes, deleteSavedRecipe } from '../api';
+import RecipeModal from '../components/RecipeModal';
 import toast from 'react-hot-toast';
 
 const SavedRecipes = () => {
   const [recipes, setRecipes] = useState([]);
+  const [selectedRecipeId, setSelectedRecipeId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,7 +22,8 @@ const SavedRecipes = () => {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (e, id) => {
+    e.stopPropagation();
     try {
       await deleteSavedRecipe(id);
       toast.success('Recipe removed!');
@@ -42,15 +45,25 @@ const SavedRecipes = () => {
       ) : (
         <div style={styles.grid}>
           {recipes.map((recipe) => (
-            <div key={recipe.id} style={styles.card}>
+            <div key={recipe.id} style={styles.card} onClick={() => setSelectedRecipeId(recipe.recipe_id)}>
               <img src={recipe.recipe_image} alt={recipe.recipe_title} style={styles.image} />
               <div style={styles.cardBody}>
                 <h3 style={styles.title}>{recipe.recipe_title}</h3>
-                <button style={styles.deleteBtn} onClick={() => handleDelete(recipe.id)}>🗑️ Remove</button>
+                <div style={styles.actions}>
+                  <button style={styles.viewBtn} onClick={() => setSelectedRecipeId(recipe.recipe_id)}>👁️ View Recipe</button>
+                  <button style={styles.deleteBtn} onClick={(e) => handleDelete(e, recipe.id)}>🗑️ Remove</button>
+                </div>
               </div>
             </div>
           ))}
         </div>
+      )}
+
+      {selectedRecipeId && (
+        <RecipeModal
+          recipeId={selectedRecipeId}
+          onClose={() => setSelectedRecipeId(null)}
+        />
       )}
     </div>
   );
@@ -62,11 +75,13 @@ const styles = {
   backBtn: { padding: '8px 16px', background: 'white', border: '1px solid #ddd', borderRadius: '8px', fontSize: '14px' },
   empty: { textAlign: 'center', fontSize: '18px', color: '#888', marginTop: '60px' },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '24px' },
-  card: { background: 'white', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', overflow: 'hidden' },
+  card: { background: 'white', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', overflow: 'hidden', cursor: 'pointer' },
   image: { width: '100%', height: '180px', objectFit: 'cover' },
   cardBody: { padding: '16px' },
   title: { fontSize: '16px', fontWeight: 'bold', marginBottom: '12px' },
-  deleteBtn: { padding: '8px 16px', background: '#ff4444', color: 'white', border: 'none', borderRadius: '8px', fontSize: '13px' },
+  actions: { display: 'flex', gap: '8px' },
+  viewBtn: { flex: 1, padding: '8px', background: '#f9f5f0', color: '#333', border: '1px solid #ddd', borderRadius: '8px', fontSize: '13px', cursor: 'pointer' },
+  deleteBtn: { padding: '8px 16px', background: '#ff4444', color: 'white', border: 'none', borderRadius: '8px', fontSize: '13px', cursor: 'pointer' },
 };
 
 export default SavedRecipes;

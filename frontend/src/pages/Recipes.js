@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getRecipeSuggestions, saveRecipe } from '../api';
+import RecipeModal from '../components/RecipeModal';
 import toast from 'react-hot-toast';
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedRecipeId, setSelectedRecipeId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,7 +25,8 @@ const Recipes = () => {
     }
   };
 
-  const handleSave = async (recipe) => {
+  const handleSave = async (e, recipe) => {
+    e.stopPropagation();
     try {
       await saveRecipe({
         recipe_id: String(recipe.id),
@@ -50,19 +53,27 @@ const Recipes = () => {
       ) : (
         <div style={styles.grid}>
           {recipes.map((recipe) => (
-            <div key={recipe.id} style={styles.card}>
+            <div key={recipe.id} style={styles.card} onClick={() => setSelectedRecipeId(recipe.id)}>
               <img src={recipe.image} alt={recipe.title} style={styles.image} />
               <div style={styles.cardBody}>
                 <h3 style={styles.title}>{recipe.title}</h3>
                 <p style={styles.meta}>✅ Uses {recipe.usedIngredientCount} of your ingredients</p>
                 <p style={styles.meta}>❌ Missing {recipe.missedIngredientCount} ingredients</p>
                 <div style={styles.actions}>
-                  <button style={styles.saveBtn} onClick={() => handleSave(recipe)}>❤️ Save</button>
+                  <button style={styles.viewBtn} onClick={() => setSelectedRecipeId(recipe.id)}>👁️ View Recipe</button>
+                  <button style={styles.saveBtn} onClick={(e) => handleSave(e, recipe)}>❤️ Save</button>
                 </div>
               </div>
             </div>
           ))}
         </div>
+      )}
+
+      {selectedRecipeId && (
+        <RecipeModal
+          recipeId={selectedRecipeId}
+          onClose={() => setSelectedRecipeId(null)}
+        />
       )}
     </div>
   );
@@ -75,13 +86,14 @@ const styles = {
   loading: { textAlign: 'center', fontSize: '18px', color: '#888', marginTop: '60px' },
   empty: { textAlign: 'center', fontSize: '18px', color: '#888', marginTop: '60px' },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '24px' },
-  card: { background: 'white', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', overflow: 'hidden' },
+  card: { background: 'white', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', overflow: 'hidden', cursor: 'pointer' },
   image: { width: '100%', height: '180px', objectFit: 'cover' },
   cardBody: { padding: '16px' },
   title: { fontSize: '16px', fontWeight: 'bold', marginBottom: '8px' },
   meta: { fontSize: '13px', color: '#666', marginBottom: '4px' },
   actions: { marginTop: '12px', display: 'flex', gap: '8px' },
-  saveBtn: { padding: '8px 16px', background: '#ff6b35', color: 'white', border: 'none', borderRadius: '8px', fontSize: '13px' },
+  viewBtn: { flex: 1, padding: '8px', background: '#f9f5f0', color: '#333', border: '1px solid #ddd', borderRadius: '8px', fontSize: '13px', cursor: 'pointer' },
+  saveBtn: { padding: '8px 16px', background: '#ff6b35', color: 'white', border: 'none', borderRadius: '8px', fontSize: '13px', cursor: 'pointer' },
 };
 
 export default Recipes;
