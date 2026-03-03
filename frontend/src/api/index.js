@@ -32,3 +32,6 @@ export const deleteShoppingItem = (id) => API.delete(`/shopping/${id}`);
 export const clearCheckedItems = () => API.delete('/shopping/clear');
 export const generateShoppingList = () => API.post('/shopping/generate');
 export const generateAIRecipe = (data) => API.post('/ai/generate-recipe', data);
+
+export const getProfile = () => API.get('/profile');
+export const getPersonalizedRecipes = () => API.get('/profile/personalized');

@@ -10,6 +10,7 @@ import SavedRecipes from './pages/SavedRecipes';
 import Journal from './pages/Journal';
 import SearchRecipes from './pages/SearchRecipes';
 import ShoppingList from './pages/ShoppingList';
+import Profile from './pages/Profile';
 
 const PrivateRoute = ({ children }) => {
   const { token } = useAuth();
@@ -29,6 +30,7 @@ const AppRoutes = () => {
       <Route path='/journal' element={<PrivateRoute><Journal /></PrivateRoute>} />
       <Route path="/search" element={<PrivateRoute><SearchRecipes /></PrivateRoute>} />
       <Route path="/shopping" element={<PrivateRoute><ShoppingList /></PrivateRoute>} />
+      <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
     </Routes>
   );
 };

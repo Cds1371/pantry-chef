@@ -50,6 +50,11 @@ const Dashboard = () => {
             <h2>Shopping List</h2>
             <p>Auto-generate missing ingredients</p>
         </div>
+        <div style={styles.card} onClick={() => navigate('/profile')}>
+          <div style={styles.cardIcon}>👤</div>
+          <h2>My Profile</h2>
+          <p>Personalized recommendations</p>
+        </div>
       </div>
     </div>
   );

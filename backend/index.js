@@ -8,6 +8,7 @@ const pantryRoutes = require('./routes/pantry');
 const recipeRoutes = require('./routes/recipes');
 const journalRoutes = require('./routes/journal');
 const shoppingRoutes = require('./routes/shopping');
+const profileRoutes = require('./routes/profile');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use('/api/pantry', pantryRoutes);
 app.use('/api/recipes', recipeRoutes);
 app.use('/api/journal', journalRoutes);
 app.use('/api/shopping', shoppingRoutes);
+app.use('/api/profile', profileRoutes);
 
 app.get('/', (req, res) => {
     res.json({ message: '🍳 PantryChef API is running!' });
