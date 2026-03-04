@@ -25,3 +25,5 @@ const getVegetarianRecipes = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+module.exports = { getSuggestedRecipes, getRecipeDetails, saveRecipe, getSavedRecipes, deleteSavedRecipe, searchRecipes, getVegetarianRecipes };
