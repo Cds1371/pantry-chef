@@ -55,6 +55,11 @@ const Dashboard = () => {
           <h2>My Profile</h2>
           <p>Personalized recommendations</p>
         </div>
+        <div style={styles.card} onClick={() => navigate('/vegetarian')}>
+          <div style={styles.cardIcon}>🌱</div>
+          <h2>Vegetarian</h2>
+          <p>Browse vegetarian recipes</p>
+        </div>
       </div>
     </div>
   );

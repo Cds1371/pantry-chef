@@ -7,7 +7,8 @@ const {
   saveRecipe,
   getSavedRecipes,
   deleteSavedRecipe,
-  searchRecipes
+  searchRecipes,
+  getVegetarianRecipes
 } = require('../controllers/recipeController');
 
 router.get('/suggestions', authMiddleware, getSuggestedRecipes);
@@ -16,5 +17,6 @@ router.get('/search', authMiddleware, searchRecipes);
 router.post('/save', authMiddleware, saveRecipe);
 router.delete('/saved/:id', authMiddleware, deleteSavedRecipe);
 router.get('/:id', authMiddleware, getRecipeDetails);
+router.get('/vegetarian', authMiddleware, getVegetarianRecipes);
 
 module.exports = router;

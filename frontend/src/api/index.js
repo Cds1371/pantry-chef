@@ -35,3 +35,4 @@ export const generateAIRecipe = (data) => API.post('/ai/generate-recipe', data);
 
 export const getProfile = () => API.get('/profile');
 export const getPersonalizedRecipes = () => API.get('/profile/personalized');
+export const getVegetarianRecipes = () => API.get('/recipes/vegetarian');

@@ -11,6 +11,7 @@ import Journal from './pages/Journal';
 import SearchRecipes from './pages/SearchRecipes';
 import ShoppingList from './pages/ShoppingList';
 import Profile from './pages/Profile';
+import VegetarianRecipes from './pages/VegetarianRecipes';
 
 const PrivateRoute = ({ children }) => {
   const { token } = useAuth();
@@ -31,6 +32,7 @@ const AppRoutes = () => {
       <Route path="/search" element={<PrivateRoute><SearchRecipes /></PrivateRoute>} />
       <Route path="/shopping" element={<PrivateRoute><ShoppingList /></PrivateRoute>} />
       <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+      <Route path="/vegetarian" element={<PrivateRoute><VegetarianRecipes /></PrivateRoute>} />
     </Routes>
   );
 };
