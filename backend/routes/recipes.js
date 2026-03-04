@@ -14,9 +14,9 @@ const {
 router.get('/suggestions', authMiddleware, getSuggestedRecipes);
 router.get('/saved/all', authMiddleware, getSavedRecipes);
 router.get('/search', authMiddleware, searchRecipes);
+router.get('/vegetarian', authMiddleware, getVegetarianRecipes);
 router.post('/save', authMiddleware, saveRecipe);
 router.delete('/saved/:id', authMiddleware, deleteSavedRecipe);
 router.get('/:id', authMiddleware, getRecipeDetails);
-router.get('/vegetarian', authMiddleware, getVegetarianRecipes);
 
 module.exports = router;
